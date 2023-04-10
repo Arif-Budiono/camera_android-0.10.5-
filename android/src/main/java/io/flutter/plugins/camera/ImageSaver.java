@@ -53,10 +53,21 @@ public class ImageSaver implements Runnable {
       output.flush();
       output.close();
       callback.onComplete(file.getAbsolutePath());
-
-//            Log.e(TAG, "" + data.length + " bytes have been written to " + filesDir + fileName + ".jpg");
     } catch (IOException e) {
       e.printStackTrace();
+    }
+    finally
+    {
+      image.close();
+      if(null != output)
+      {
+        try {
+          output.close();
+        } catch (IOException e) {
+          callback.onError("CameraAccess",e.getMessage());
+        }
+
+      }
     }
 
   }
